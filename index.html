@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coincu Lead Intelligence Dashboard</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body { background: #f5f6f8; font-family:'DM Sans',sans-serif; overflow:hidden;}
+        .app{display:flex;height:100vh;}
+        .sidebar{width:220px;background:#fff;border-right:1px solid #e8eaed;display:flex;flex-direction:column;padding:20px;}
+        .logo{font-weight:700;color:#FF6B2C;margin-bottom:30px;display:flex;align-items:center;gap:8px;font-size:18px;}
+        .nav-item{padding:12px;border-radius:8px;cursor:pointer;color:#6b7280;margin-bottom:4px;display:flex;align-items:center;gap:10px;font-size:14px;transition:0.2s;}
+        .nav-item.active{background:#FFF3EE;color:#FF6B2C;font-weight:600;}
+        .nav-item:hover:not(.active){background:#f8fafc;}
+        .main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+        .topbar{padding:16px 24px;background:#fff;border-bottom:1px solid #e8eaed;display:flex;justify-content:space-between;align-items:center;}
+        .tab-group{display:flex;gap:5px;background:#f3f4f6;padding:4px;border-radius:10px;}
+        .tab-btn{padding:8px 20px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;transition:0.2s;}
+        .tab-btn.active{background:#fff;color:#FF6B2C;box-shadow:0 1px 3px rgba(0,0,0,0.1);}
+        .content{flex:1;overflow-y:auto;padding:24px;}
+        .hot-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(420px, 1fr));gap:20px;}
+        .hc{background:#fff;border:1px solid #e8eaed;border-radius:16px;padding:24px;position:relative;transition:all 0.2s;box-shadow:0 1px 2px rgba(0,0,0,0.03);}
+        .hc:hover{border-color:#FF6B2C;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);}
+        .hn{font-size:17px;font-weight:600;margin-bottom:12px;display:block;color:#1a1d23;}
+        .hcontacts{display:flex;gap:10px;margin-bottom:16px;}
+        .lk{padding:6px 12px;border-radius:8px;background:#f8fafc;border:1px solid #e2e8f0;font-size:12px;text-decoration:none;color:#475569;display:flex;align-items:center;gap:6px;transition:0.2s;}
+        .lk:hover{border-color:#FF6B2C;color:#FF6B2C;}
+        .hnote{background:#fff8f5;padding:14px;border-radius:10px;border-left:4px solid #FF6B2C;font-size:13px;line-height:1.6;margin-bottom:16px;color:#374151;}
+        .hres{font-size:12px;color:#64748b;}
+        /* Nút Xóa - FIXED HIỂN THỊ */
+        .del-action{position:absolute;top:15px;right:15px;width:34px;height:34px;border-radius:10px;background:#fee2e2;color:#ef4444;border:1px solid #fecaca;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;z-index:20;}
+        .del-action:hover{background:#ef4444;color:#fff;transform:rotate(90deg);}
+        .del-action i{font-size:16px;}
+        .weekly-table{background:#fff;border:1px solid #e8eaed;border-radius:16px;overflow:hidden;}
+        .tr{display:grid;grid-template-columns:220px 150px 150px 100px 1fr 1fr 60px;padding:16px 24px;border-bottom:1px solid #f1f5f9;align-items:center;}
+        .th{font-weight:600;color:#94a3b8;font-size:11px;text-transform:uppercase;background:#f8fafc;letter-spacing:0.05em;}
+        .av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;}
+        .av-a{background:#FFF3EE;color:#CC4A15;}
+        .av-b{background:#E6F1FB;color:#185FA5;}
+        .av-c{background:#E1F5EE;color:#0F6E56;}
+        .av-d{background:#EEEDFE;color:#534AB7;}
+        .av-e{background:#FAEEDA;color:#854F0B;}
+        .ib{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;}
+        .ih{background:#FCEBEB;color:#A32D2D;}
+        .im{background:#E6F1FB;color:#185FA5;}
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useMemo } = React;
+        const DATA = [
+    {
+        "id": "lois168_Annmarie Lois",
+        "name": "Annmarie Lois",
+        "initials": "AL",
+        "color": "av-b",
+        "tg": "https://t.me/lois168",
+        "web": "hackernoon.com",
+        "date": "05 Jun · 09:54",
+        "raw_date": "2026-06-05 09:54",
+        "note": "Đang trao đổi về việc đăng bài PR/Article. (Cập nhật cuối: 'I will provide you with two more press releases....') ",
+        "res": "Dự án về Trading Bot. Phân khúc này thường có ngân sách marketing tốt.",
+        "impact": "High"
+    },
+    {
+        "id": "Emma_Seo19_Emma Müller",
+        "name": "Emma Müller",
+        "initials": "EM",
+        "color": "av-b",
+        "tg": "https://t.me/Emma_Seo19",
+        "web": "docs.google.com",
+        "date": "05 Jun · 09:21",
+        "raw_date": "2026-06-05 09:21",
+        "note": "Đang hỏi giá hoặc thảo luận vị trí đặt Banner. (Cập nhật cuối: 'Don't disturb me...') ",
+        "res": "Dự án về Trading Bot. Phân khúc này thường có ngân sách marketing tốt.",
+        "impact": "High"
+    },
+    {
+        "id": "alinaa_etherpr_Alina J",
+        "name": "Alina J",
+        "initials": "AJ",
+        "color": "av-e",
+        "tg": "https://t.me/alinaa_etherpr",
+        "web": "",
+        "date": "05 Jun · 07:42",
+        "raw_date": "2026-06-05 07:42",
+        "note": "Đang hỏi giá hoặc thảo luận vị trí đặt Banner. (Cập nhật cuối: 'Waiting...') ",
+        "res": "Dự án Casino/iGaming. Phân khúc siêu lợi nhuận, ưu tiên chốt banner.",
+        "impact": "High"
+    },
+    {
+        "id": "8531108043_Danish Outreach",
+        "name": "Danish Outreach",
+        "initials": "DO",
+        "color": "av-c",
+        "tg": "",
+        "web": "",
+        "date": "05 Jun · 07:20",
+        "raw_date": "2026-06-05 07:20",
+        "note": "Đang trao đổi về việc đăng bài PR/Article. (Cập nhật cuối: 'Or you can order bulk 10 PRs. We are willing to of...') ",
+        "res": "Khách hàng có nhu cầu truyền thông, có thể upsell các gói bài viết lớn.",
+        "impact": "Medium"
+    },
+    {
+        "id": "Aron_LuvenLabs_Aron | LuvenLabs",
+        "name": "Aron | LuvenLabs",
+        "initials": "AL",
+        "color": "av-b",
+        "tg": "https://t.me/Aron_LuvenLabs",
+        "web": "",
+        "date": "03 Jun · 10:00",
+        "raw_date": "2026-06-03 10:00",
+        "note": "Đang trao đổi với đại diện quỹ đầu tư (VC). (Cập nhật cuối: 'Yeah we come across quite a few. What's your ticke...') ",
+        "res": "Cơ hội deal-flow và bán gói PR tổng thể cho toàn bộ portfolio của quỹ.",
+        "impact": "Medium"
+    },
+    {
+        "id": "william_raulin_William Raulin / X Ventures & Proof of Talk 🇫🇷🇦🇪",
+        "name": "William Raulin / X Ventures & Proof of Talk 🇫🇷🇦🇪",
+        "initials": "W🇫",
+        "color": "av-e",
+        "tg": "https://t.me/william_raulin",
+        "web": "",
+        "date": "03 Jun · 09:50",
+        "raw_date": "2026-06-03 09:50",
+        "note": "Đang trao đổi với đại diện quỹ đầu tư (VC). (Cập nhật cuối: 'I'm curious, what kind of media support or visibil...') ",
+        "res": "Cơ hội deal-flow và bán gói PR tổng thể cho toàn bộ portfolio của quỹ.",
+        "impact": "Medium"
+    },
+    {
+        "id": "Hxrarmonyr_Harmony",
+        "name": "Harmony",
+        "initials": "HA",
+        "color": "av-c",
+        "tg": "https://t.me/Hxrarmonyr",
+        "web": "betfury.bet",
+        "date": "03 Jun · 07:36",
+        "raw_date": "2026-06-03 07:36",
+        "note": "Đang trao đổi về việc đăng bài PR/Article. (Cập nhật cuối: 'It's already live, betfury.bet is just the trackin...') ",
+        "res": "Dự án Casino/iGaming. Phân khúc siêu lợi nhuận, ưu tiên chốt banner.",
+        "impact": "Medium"
+    },
+    {
+        "id": "ThanaWhoV2_Thana Who",
+        "name": "Thana Who",
+        "initials": "TW",
+        "color": "av-b",
+        "tg": "https://t.me/ThanaWhoV2",
+        "web": "one.google.com",
+        "date": "03 Jun · 04:39",
+        "raw_date": "2026-06-03 04:39",
+        "note": "Đang thảo luận chung. (Cập nhật cuối: 'Oke e...') ",
+        "res": "Dự án về Trading Bot. Phân khúc này thường có ngân sách marketing tốt.",
+        "impact": "High"
+    },
+    {
+        "id": "stormulv_Alexandre D.Salvo",
+        "name": "Alexandre D.Salvo",
+        "initials": "AD",
+        "color": "av-d",
+        "tg": "https://t.me/stormulv",
+        "web": "github.com",
+        "date": "03 Jun · 03:48",
+        "raw_date": "2026-06-03 03:48",
+        "note": "Đang trao đổi về việc đăng bài PR/Article. (Cập nhật cuối: 'Is it something you're planning to launch publicly...') ",
+        "res": "Dự án về Trading Bot. Phân khúc này thường có ngân sách marketing tốt.",
+        "impact": "High"
+    },
+    {
+        "id": "kaylani_way_KAYLANI || Angelina",
+        "name": "KAYLANI || Angelina",
+        "initials": "KA",
+        "color": "av-a",
+        "tg": "https://t.me/kaylani_way",
+        "web": "",
+        "date": "03 Jun · 03:33",
+        "raw_date": "2026-06-03 03:33",
+        "note": "Đang trao đổi về việc đăng bài PR/Article. (Cập nhật cuối: 'What about Yupland, what are you building? I check...') ",
+        "res": "Khách hàng có nhu cầu truyền thông, có thể upsell các gói bài viết lớn.",
+        "impact": "Medium"
+    },
+    {
+        "id": "AdiyaKara0_Adiya Kara",
+        "name": "Adiya Kara",
+        "initials": "AK",
+        "color": "av-a",
+        "tg": "https://t.me/AdiyaKara0",
+        "web": "",
+        "date": "03 Jun · 03:22",
+        "raw_date": "2026-06-03 03:22",
+        "note": "Đang trao đổi với đại diện quỹ đầu tư (VC). (Cập nhật cuối: 'Are you working for VCs or project ?...') ",
+        "res": "Cơ hội deal-flow và bán gói PR tổng thể cho toàn bộ portfolio của quỹ.",
+        "impact": "Medium"
+    },
+    {
+        "id": "goresnft_Grame Hart",
+        "name": "Grame Hart",
+        "initials": "GH",
+        "color": "av-d",
+        "tg": "https://t.me/goresnft",
+        "web": "docs.google.com",
+        "date": "02 Jun · 11:49",
+        "raw_date": "2026-06-02 11:49",
+        "note": "Đã xác nhận thanh toán hoặc đang trong quá trình chuyển tiền. (Cập nhật cuối: 'Okay, will process now...') ",
+        "res": "Dự án về Trading Bot. Phân khúc này thường có ngân sách marketing tốt.",
+        "impact": "High"
+    },
+    {
+        "id": "JatinRatatui_Jatin",
+        "name": "Jatin",
+        "initials": "JA",
+        "color": "av-e",
+        "tg": "https://t.me/JatinRatatui",
+        "web": "",
+        "date": "02 Jun · 09:59",
+        "raw_date": "2026-06-02 09:59",
+        "note": "Đang trao đổi với đại diện quỹ đầu tư (VC). (Cập nhật cuối: 'My name is Jatin,  I’m a researcher. I work with С...') ",
+        "res": "Cơ hội deal-flow và bán gói PR tổng thể cho toàn bộ portfolio của quỹ.",
+        "impact": "Medium"
+    },
+    {
+        "id": "tomidr_Tomas",
+        "name": "Tomas",
+        "initials": "TO",
+        "color": "av-d",
+        "tg": "https://t.me/tomidr",
+        "web": "",
+        "date": "02 Jun · 09:38",
+        "raw_date": "2026-06-02 09:38",
+        "note": "Đang hỏi giá hoặc thảo luận vị trí đặt Banner. (Cập nhật cuối: '**FLASH PR — JUNE UPDATES   **→ Monthly Traffic is...') ",
+        "res": "Cơ hội chốt hợp đồng quảng cáo dài hạn (recurring revenue).",
+        "impact": "Medium"
+    }
+];
+
+        function App() {
+            const [leads, setLeads] = useState(DATA);
+            const [tab, setTab] = useState('daily');
+
+            const handleDelete = async (id) => {
+                if(confirm("Xóa vĩnh viễn lead này khỏi hệ thống?")) {
+                    try {
+                        // Gửi yêu cầu xóa tới server cục bộ
+                        const response = await fetch('http://localhost:8080/delete', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                            body: `id=${encodeURIComponent(id)}`
+                        });
+                        
+                        if (response.ok) {
+                            const newLeads = leads.filter(l => l.id !== id);
+                            setLeads(newLeads);
+                            alert("Đã xóa vĩnh viễn!");
+                            // Reload data sau khi server đã update Dashboard
+                            window.location.reload();
+                        } else {
+                            // Nếu không có server, chỉ xóa tạm thời ở giao diện
+                            const newLeads = leads.filter(l => l.id !== id);
+                            setLeads(newLeads);
+                            alert("Đã xóa tạm thời (Vui lòng chạy dashboard_server.py để xóa vĩnh viễn)");
+                        }
+                    } catch (e) {
+                        const newLeads = leads.filter(l => l.id !== id);
+                        setLeads(newLeads);
+                        alert("Đã xóa tạm thời (Server chưa bật)");
+                    }
+                }
+            };
+
+            const daily = useMemo(() => {
+                const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+                return leads.filter(l => {
+                    if(!l.raw_date) return false;
+                    const leadDate = new Date(l.raw_date.replace(" ", "T"));
+                    return leadDate >= twentyFourHoursAgo;
+                });
+            }, [leads]);
+            const weekly = useMemo(() => leads.slice(0, 8), [leads]);
+
+            return (
+                <div className="app">
+                    <div className="sidebar">
+                        <div className="logo"><i className="ti ti-bolt"></i> COINCU LEAD</div>
+                        <div className={`nav-item ${tab === 'daily' ? 'active' : ''}`} onClick={() => setTab('daily')}><i className="ti ti-flame"></i> Daily Leads</div>
+                        <div className={`nav-item ${tab === 'weekly' ? 'active' : ''}`} onClick={() => setTab('weekly')}><i className="ti ti-calendar"></i> Weekly Report</div>
+                    </div>
+                    <div className="main">
+                        <div className="topbar">
+                            <h2 style={{fontSize:'20px',fontWeight:'700'}}>{tab === 'daily' ? '🚀 Leads Nóng 24h' : '📅 Báo Cáo Tuần'}</h2>
+                            <div className="tab-group">
+                                <button className={`tab-btn ${tab === 'daily' ? 'active' : ''}`} onClick={() => setTab('daily')}>Daily View</button>
+                                <button className={`tab-btn ${tab === 'weekly' ? 'active' : ''}`} onClick={() => setTab('weekly')}>Weekly View</button>
+                            </div>
+                        </div>
+                        <div className="content">
+                            {tab === 'daily' ? (
+                                <div className="hot-grid">
+                                    {daily.length === 0 && (
+                                        <div style={{gridColumn: '1 / -1', padding: '40px', textAlign: 'center', color: '#64748b', background: '#fff', borderRadius: '16px', border: '1px dashed #e2e8f0'}}>
+                                            <i className="ti ti-ghost" style={{fontSize: '32px', marginBottom: '10px', display: 'block'}}></i>
+                                            <p style={{fontSize: '14px', fontWeight: '500'}}>Không có lead nào tương tác sâu trong 24h qua.</p>
+                                        </div>
+                                    )}
+                                    {daily.map(l => (
+                                        <div className="hc" key={l.id}>
+                                            <button className="del-action" onClick={() => handleDelete(l.id)} title="Xóa Lead">
+                                                <i className="ti ti-trash"></i>
+                                            </button>
+                                            <span className="hn">{l.name}</span>
+                                            <div className="hcontacts">
+                                                <a href={l.tg} className="lk" target="_blank"><i className="ti ti-brand-telegram"></i> Telegram</a>
+                                                {l.web && <span className="lk"><i className="ti ti-world"></i> {l.web}</span>}
+                                            </div>
+                                            <div className="hnote">{l.note}</div>
+                                            <div className="hres"><strong>Research:</strong> {l.res}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="weekly-table">
+                                    <div className="tr th">
+                                        <div>Lead Name</div><div>Telegram</div><div>Website</div><div>Impact</div><div>Note</div><div>Research</div><div>Action</div>
+                                    </div>
+                                    {weekly.map(l => (
+                                        <div className="tr" key={l.id}>
+                                            <div style={{display:'flex',gap:'12px',alignItems:'center'}}>
+                                                <div className={`av ${l.color}`}>{l.initials}</div>
+                                                <div style={{fontWeight:'600',fontSize:'14px',color:'#1e293b'}}>{l.name}</div>
+                                            </div>
+                                            <div><a href={l.tg} className="lk" style={{border:'none',background:'transparent',color:'#0088cc',fontWeight:'600'}} target="_blank">Telegram</a></div>
+                                            <div style={{fontSize:'12px',color:'#64748b'}}>{l.web || '-'}</div>
+                                            <div><span className={`ib ${l.impact==='High'?'ih':'im'}`}>{l.impact}</span></div>
+                                            <div style={{fontSize:'12px',lineHeight:'1.5',color:'#334155'}}>{l.note}</div>
+                                            <div style={{fontSize:'12px',color:'#64748b'}}>{l.res}</div>
+                                            <button className="del-action" style={{position:'static'}} onClick={() => handleDelete(l.id)}>
+                                                <i className="ti ti-trash"></i>
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
