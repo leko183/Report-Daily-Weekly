@@ -9,53 +9,151 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
         *{box-sizing:border-box;margin:0;padding:0;}
-        body { background: #f5f6f8; font-family:'DM Sans',sans-serif; overflow:hidden;}
-        .app{display:flex;height:100vh;}
-        .sidebar{width:220px;background:#fff;border-right:1px solid #e8eaed;display:flex;flex-direction:column;padding:20px;}
-        .logo{font-weight:700;color:#FF6B2C;margin-bottom:30px;display:flex;align-items:center;gap:8px;font-size:18px;}
-        .nav-item{padding:12px;border-radius:8px;cursor:pointer;color:#6b7280;margin-bottom:4px;display:flex;align-items:center;gap:10px;font-size:14px;transition:0.2s;}
-        .nav-item.active{background:#FFF3EE;color:#FF6B2C;font-weight:600;}
-        .nav-item:hover:not(.active){background:#f8fafc;}
-        .main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-        .topbar{padding:16px 24px;background:#fff;border-bottom:1px solid #e8eaed;display:flex;justify-content:space-between;align-items:center;}
-        .tab-group{display:flex;gap:5px;background:#f3f4f6;padding:4px;border-radius:10px;}
-        .tab-btn{padding:8px 20px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;transition:0.2s;}
-        .tab-btn.active{background:#fff;color:#FF6B2C;box-shadow:0 1px 3px rgba(0,0,0,0.1);}
-        .content{flex:1;overflow-y:auto;padding:24px;}
-        .hot-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(420px, 1fr));gap:20px;}
-        .hc{background:#fff;border:1px solid #e8eaed;border-radius:16px;padding:24px;position:relative;transition:all 0.2s;box-shadow:0 1px 2px rgba(0,0,0,0.03);}
-        .hc:hover{border-color:#FF6B2C;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);}
-        .hn{font-size:17px;font-weight:600;margin-bottom:12px;display:block;color:#1a1d23;}
-        .hcontacts{display:flex;gap:10px;margin-bottom:16px;}
-        .lk{padding:6px 12px;border-radius:8px;background:#f8fafc;border:1px solid #e2e8f0;font-size:12px;text-decoration:none;color:#475569;display:flex;align-items:center;gap:6px;transition:0.2s;}
-        .lk:hover{border-color:#FF6B2C;color:#FF6B2C;}
-        .hnote{background:#fff8f5;padding:14px;border-radius:10px;border-left:4px solid #FF6B2C;font-size:13px;line-height:1.6;margin-bottom:16px;color:#374151;}
-        .hres{font-size:12px;color:#64748b;}
-        /* Nút Xóa - FIXED HIỂN THỊ */
-        .del-action{position:absolute;top:15px;right:15px;width:34px;height:34px;border-radius:10px;background:#fee2e2;color:#ef4444;border:1px solid #fecaca;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;z-index:20;}
-        .del-action:hover{background:#ef4444;color:#fff;transform:rotate(90deg);}
-        .del-action i{font-size:16px;}
-        .weekly-table{background:#fff;border:1px solid #e8eaed;border-radius:16px;overflow:hidden;}
-        .tr{display:grid;grid-template-columns:220px 150px 150px 100px 1fr 1fr 60px;padding:16px 24px;border-bottom:1px solid #f1f5f9;align-items:center;}
-        .th{font-weight:600;color:#94a3b8;font-size:11px;text-transform:uppercase;background:#f8fafc;letter-spacing:0.05em;}
-        .av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;}
-        .av-a{background:#FFF3EE;color:#CC4A15;}
-        .av-b{background:#E6F1FB;color:#185FA5;}
-        .av-c{background:#E1F5EE;color:#0F6E56;}
-        .av-d{background:#EEEDFE;color:#534AB7;}
-        .av-e{background:#FAEEDA;color:#854F0B;}
-        .ib{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;}
-        .ih{background:#FCEBEB;color:#A32D2D;}
-        .im{background:#E6F1FB;color:#185FA5;}
+        body { background: #f0f2f5; }
+        .app{display:flex;height:100vh;background:#f5f6f8;font-family:'DM Sans',sans-serif;overflow:hidden;}
+        
+        /* SIDEBAR (Original) */
+        .sidebar{width:210px;flex-shrink:0;background:#fff;border-right:1px solid #e8eaed;display:flex;flex-direction:column;}
+        .logo-area{padding:20px 18px 16px;border-bottom:1px solid #f0f1f3;}
+        .logo{display:flex;align-items:center;gap:9px;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:#1a1d23;letter-spacing:0.04em;}
+        .logo-icon{width:28px;height:28px;background:#FF6B2C;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;}
+        .logo-sub{font-size:9px;color:#9aa0ac;letter-spacing:0.1em;margin-top:1px;}
+        .nav-section{padding:14px 10px 6px;}
+        .nav-label{font-size:9.5px;font-weight:600;color:#bbbfc8;letter-spacing:0.12em;text-transform:uppercase;padding:0 8px;margin-bottom:5px;}
+        .nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:#6b7280;margin-bottom:1px;transition:all 0.12s;}
+        .nav-item:hover{background:#f7f8fa;color:#374151;}
+        .nav-item.active{background:#FFF3EE;color:#FF6B2C;font-weight:500;}
+        .ni{font-size:16px;}
+        .nav-badge{margin-left:auto;background:#FF6B2C;color:#fff;font-size:10px;font-weight:600;padding:1px 7px;border-radius:20px;font-family:'DM Mono',monospace;}
+        .sidebar-stat{margin:auto 12px 14px;background:#f7f8fa;border-radius:10px;padding:12px 14px;border:1px solid #eef0f3;}
+        .ss-label{font-size:11px;color:#9aa0ac;margin-bottom:3px;}
+        .ss-val{font-size:22px;font-weight:600;color:#1a1d23;font-family:'DM Mono',monospace;}
+        .ss-sub{font-size:11px;color:#b0b6c0;margin-top:2px;}
+        
+        /* MAIN & TOPBAR (Original) */
+        .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
+        .topbar{display:flex;align-items:center;padding:16px 22px 14px;border-bottom:1px solid #e8eaed;background:#fff;gap:12px;}
+        .page-title{font-size:16px;font-weight:600;color:#1a1d23;}
+        .page-sub{font-size:11.5px;color:#9aa0ac;margin-top:1px;}
+        .tab-group{display:flex;gap:3px;margin-left:auto;background:#f3f4f6;padding:3px;border-radius:9px;}
+        .tab-btn{padding:5px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;color:#6b7280;border:none;background:transparent;font-family:'DM Sans',sans-serif;transition:all 0.12s;}
+        .tab-btn.active{background:#fff;color:#FF6B2C;box-shadow:0 1px 3px rgba(0,0,0,0.08);}
+        .export-btn{display:flex;align-items:center;gap:7px;background:#FF6B2C;color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif; transition: transform 0.1s;}
+        .export-btn:hover { background: #e55a20; }
+        
+        .content{flex:1;overflow-y:auto;padding:20px 22px;}
+        
+        /* METRICS (Original) */
+        .metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
+        .mc{background:#fff;border:1px solid #e8eaed;border-radius:11px;padding:14px 16px;border-top:3px solid transparent;}
+        .mc.c1{border-top-color:#FF6B2C;}.mc.c2{border-top-color:#378ADD;}.mc.c3{border-top-color:#1D9E75;}.mc.c4{border-top-color:#E24B4A;}
+        .mc-label{font-size:10.5px;color:#9aa0ac;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+        .mc-val{font-size:26px;font-weight:600;color:#1a1d23;font-family:'DM Mono',monospace;line-height:1;}
+        .mc-delta{font-size:11px;margin-top:5px;display:flex;align-items:center;gap:3px;}
+        .up{color:#1D9E75;}.dn{color:#E24B4A;}
+        
+        /* TOOLBAR */
+        .toolbar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+        .sec-title{font-size:13.5px;font-weight:600;color:#1a1d23;}
+        .count-pill{background:#f3f4f6;color:#6b7280;font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px;font-family:'DM Mono',monospace;}
+        
+        /* DAILY GRID (Original) */
+        .hot-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(450px, 1fr));gap:15px;}
+        .hc{background:#fff;border:1px solid #e8eaed;border-radius:14px;padding:20px;transition:border-color 0.12s;box-shadow: 0 1px 3px rgba(0,0,0,0.02); position: relative;}
+        .hc:hover{border-color:#FF6B2C;}
+        .hch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
+        .hot-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:#FCEBEB;color:#A32D2D;border:1px solid #F7C1C1;}
+        .hn{font-size:15px;font-weight:600;color:#1a1d23;}
+        .hdate{font-size:11px;color:#bbbfc8;font-family:'DM Mono',monospace;margin-top:4px;}
+        .hcontacts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:15px;}
+        .hnote{border-left:3px solid #FF6B2C;padding-left:14px;font-size:13px;color:#374151;line-height:1.6;margin-bottom:15px;background: #fff8f5; padding: 12px 14px; border-radius: 0 8px 8px 0;}
+        .hres{font-size:12.5px;color:#6b7280;line-height:1.5;}
+        
+        /* WEEKLY TABLE (Original) */
+        .weekly-wrap{overflow-x:auto;}
+        .weekly-table{background:#fff;border:1px solid #e8eaed;border-radius:13px;overflow:hidden;min-width:1100px;}
+        /* Original Columns layout */
+        .cols{display: grid; grid-template-columns:180px 160px 160px 80px minmax(0,1.2fr) minmax(0,1.2fr) 40px; gap:12px; align-items: center;}
+        .th{padding:10px 16px;background:#fafbfc;border-bottom:1px solid #eef0f3;font-size:10px;font-weight:600;color:#9aa0ac;letter-spacing:0.1em;text-transform:uppercase;}
+        .tr{padding:14px 16px;border-bottom:1px solid #f3f4f6;cursor:pointer;transition:background 0.1s;}
+        .tr:hover{background:#fafbfc;}
+        .lnc{display:flex;align-items:flex-start;gap:10px;}
+        .av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;}
+        .av-a{background:#FFF3EE;color:#CC4A15;}.av-b{background:#E6F1FB;color:#185FA5;}.av-c{background:#E1F5EE;color:#0F6E56;}.av-d{background:#EEEDFE;color:#534AB7;}.av-e{background:#FAEEDA;color:#854F0B;}
+        .ln{font-size:13px;font-weight:600;color:#1a1d23;}
+        .lsrc{font-size:11px;color:#9aa0ac;}
+        .ldate{font-size:10px;color:#bbbfc8;margin-top:3px;font-family:'DM Mono',monospace;}
+        .links-cell{display:flex;flex-direction:column;gap:5px;}
+        .lk{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:6px;border:1px solid #eef0f3;background:#fafbfc;text-decoration:none;color:inherit;}
+        .lk span{font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;}
+        .lk-tg{color:#0088cc;}.lk-tg:hover{background:#E6F4FB;}
+        .lk-wb{color:#5F5E5A;}.lk-wb:hover{background:#F1EFE8;}
+        .ib{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;text-transform:uppercase;}
+        .ih{background:#FCEBEB;color:#A32D2D;}.im{background:#E6F1FB;color:#185FA5;}
+        .note-cell{font-size:12px;color:#374151;line-height:1.5;}
+        .res-cell{font-size:11.5px;color:#6b7280;line-height:1.5;}
+        .res-opp{display:inline-flex;align-items:center;gap:4px;background:#E1F5EE;color:#0F6E56;font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px;margin-top:6px;}
+        
+        /* === TÍNH NĂNG MỚI (ADD-ON) KHÔNG PHÁ VỠ LAYOUT CŨ === */
+        
+        /* Nút Delete trong Daily Card (Góc phải trên cùng) */
+        .del-daily-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: #fff;
+            border: 1px solid #fee2e2;
+            color: #ef4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+        .hc:hover .del-daily-btn { opacity: 1; }
+        .del-daily-btn:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
+        
+        /* Nút Delete trong Weekly Table (Cột cuối cùng) */
+        .del-weekly-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: #fff;
+            border: 1px solid #fee2e2;
+            color: #ef4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .del-weekly-btn:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
+        
+        /* Empty State cho Daily */
+        .empty-state {
+            grid-column: 1 / -1;
+            padding: 40px;
+            text-align: center;
+            color: #9aa0ac;
+            background: #fff;
+            border-radius: 14px;
+            border: 1px dashed #e8eaed;
+        }
     </style>
 </head>
 <body>
     <div id="root"></div>
+
     <script type="text/babel">
         const { useState, useMemo } = React;
-        const DATA = [
+        const INITIAL_DATA = [
     {
         "id": "lois168_Annmarie Lois",
         "name": "Annmarie Lois",
@@ -67,7 +165,8 @@
         "raw_date": "2026-06-05 09:54",
         "note": "Đang trao đổi về việc đăng bài PR/Article. (Cập nhật cuối: 'I will provide you with two more press releases....') ",
         "res": "Dự án về Trading Bot. Phân khúc này thường có ngân sách marketing tốt.",
-        "impact": "High"
+        "impact": "High",
+        "role": "Project Owner"
     },
     {
         "id": "Emma_Seo19_Emma Müller",
@@ -80,7 +179,8 @@
         "raw_date": "2026-06-05 09:21",
         "note": "Đang hỏi giá hoặc thảo luận vị trí đặt Banner. (Cập nhật cuối: 'Don't disturb me...') ",
         "res": "Dự án về Trading Bot. Phân khúc này thường có ngân sách marketing tốt.",
-        "impact": "High"
+        "impact": "High",
+        "role": "Project Owner"
     },
     {
         "id": "alinaa_etherpr_Alina J",
@@ -93,7 +193,8 @@
         "raw_date": "2026-06-05 07:42",
         "note": "Đang hỏi giá hoặc thảo luận vị trí đặt Banner. (Cập nhật cuối: 'Waiting...') ",
         "res": "Dự án Casino/iGaming. Phân khúc siêu lợi nhuận, ưu tiên chốt banner.",
-        "impact": "High"
+        "impact": "High",
+        "role": "Media/PR"
     },
     {
         "id": "8531108043_Danish Outreach",
@@ -106,7 +207,8 @@
         "raw_date": "2026-06-05 07:20",
         "note": "Đang trao đổi về việc đăng bài PR/Article. (Cập nhật cuối: 'Or you can order bulk 10 PRs. We are willing to of...') ",
         "res": "Khách hàng có nhu cầu truyền thông, có thể upsell các gói bài viết lớn.",
-        "impact": "Medium"
+        "impact": "Medium",
+        "role": "Media/PR"
     },
     {
         "id": "Aron_LuvenLabs_Aron | LuvenLabs",
@@ -119,7 +221,8 @@
         "raw_date": "2026-06-03 10:00",
         "note": "Đang trao đổi với đại diện quỹ đầu tư (VC). (Cập nhật cuối: 'Yeah we come across quite a few. What's your ticke...') ",
         "res": "Cơ hội deal-flow và bán gói PR tổng thể cho toàn bộ portfolio của quỹ.",
-        "impact": "Medium"
+        "impact": "Medium",
+        "role": "Media/PR"
     },
     {
         "id": "william_raulin_William Raulin / X Ventures & Proof of Talk 🇫🇷🇦🇪",
@@ -132,7 +235,8 @@
         "raw_date": "2026-06-03 09:50",
         "note": "Đang trao đổi với đại diện quỹ đầu tư (VC). (Cập nhật cuối: 'I'm curious, what kind of media support or visibil...') ",
         "res": "Cơ hội deal-flow và bán gói PR tổng thể cho toàn bộ portfolio của quỹ.",
-        "impact": "Medium"
+        "impact": "Medium",
+        "role": "Media/PR"
     },
     {
         "id": "Hxrarmonyr_Harmony",
@@ -145,7 +249,8 @@
         "raw_date": "2026-06-03 07:36",
         "note": "Đang trao đổi về việc đăng bài PR/Article. (Cập nhật cuối: 'It's already live, betfury.bet is just the trackin...') ",
         "res": "Dự án Casino/iGaming. Phân khúc siêu lợi nhuận, ưu tiên chốt banner.",
-        "impact": "Medium"
+        "impact": "Medium",
+        "role": "Media/PR"
     },
     {
         "id": "ThanaWhoV2_Thana Who",
@@ -158,7 +263,8 @@
         "raw_date": "2026-06-03 04:39",
         "note": "Đang thảo luận chung. (Cập nhật cuối: 'Oke e...') ",
         "res": "Dự án về Trading Bot. Phân khúc này thường có ngân sách marketing tốt.",
-        "impact": "High"
+        "impact": "High",
+        "role": "Project Owner"
     },
     {
         "id": "stormulv_Alexandre D.Salvo",
@@ -171,7 +277,8 @@
         "raw_date": "2026-06-03 03:48",
         "note": "Đang trao đổi về việc đăng bài PR/Article. (Cập nhật cuối: 'Is it something you're planning to launch publicly...') ",
         "res": "Dự án về Trading Bot. Phân khúc này thường có ngân sách marketing tốt.",
-        "impact": "High"
+        "impact": "High",
+        "role": "Project Owner"
     },
     {
         "id": "kaylani_way_KAYLANI || Angelina",
@@ -184,7 +291,8 @@
         "raw_date": "2026-06-03 03:33",
         "note": "Đang trao đổi về việc đăng bài PR/Article. (Cập nhật cuối: 'What about Yupland, what are you building? I check...') ",
         "res": "Khách hàng có nhu cầu truyền thông, có thể upsell các gói bài viết lớn.",
-        "impact": "Medium"
+        "impact": "Medium",
+        "role": "Media/PR"
     },
     {
         "id": "AdiyaKara0_Adiya Kara",
@@ -197,7 +305,8 @@
         "raw_date": "2026-06-03 03:22",
         "note": "Đang trao đổi với đại diện quỹ đầu tư (VC). (Cập nhật cuối: 'Are you working for VCs or project ?...') ",
         "res": "Cơ hội deal-flow và bán gói PR tổng thể cho toàn bộ portfolio của quỹ.",
-        "impact": "Medium"
+        "impact": "Medium",
+        "role": "Media/PR"
     },
     {
         "id": "goresnft_Grame Hart",
@@ -210,7 +319,8 @@
         "raw_date": "2026-06-02 11:49",
         "note": "Đã xác nhận thanh toán hoặc đang trong quá trình chuyển tiền. (Cập nhật cuối: 'Okay, will process now...') ",
         "res": "Dự án về Trading Bot. Phân khúc này thường có ngân sách marketing tốt.",
-        "impact": "High"
+        "impact": "High",
+        "role": "Project Owner"
     },
     {
         "id": "JatinRatatui_Jatin",
@@ -223,7 +333,8 @@
         "raw_date": "2026-06-02 09:59",
         "note": "Đang trao đổi với đại diện quỹ đầu tư (VC). (Cập nhật cuối: 'My name is Jatin,  I’m a researcher. I work with С...') ",
         "res": "Cơ hội deal-flow và bán gói PR tổng thể cho toàn bộ portfolio của quỹ.",
-        "impact": "Medium"
+        "impact": "Medium",
+        "role": "Media/PR"
     },
     {
         "id": "tomidr_Tomas",
@@ -236,18 +347,49 @@
         "raw_date": "2026-06-02 09:38",
         "note": "Đang hỏi giá hoặc thảo luận vị trí đặt Banner. (Cập nhật cuối: '**FLASH PR — JUNE UPDATES   **→ Monthly Traffic is...') ",
         "res": "Cơ hội chốt hợp đồng quảng cáo dài hạn (recurring revenue).",
-        "impact": "Medium"
+        "impact": "Medium",
+        "role": "Media/PR"
     }
 ];
 
+        function Sidebar({ tab, setTab, dailyCount }) {
+            return (
+                <div className="sidebar">
+                    <div className="logo-area">
+                        <div className="logo">
+                            <div className="logo-icon">⚡</div>
+                            <div>COINCU LEAD<div className="logo-sub">INTELLIGENCE PLATFORM</div></div>
+                        </div>
+                    </div>
+                    <div className="nav-section">
+                        <div className="nav-label">Main</div>
+                        <div className={`nav-item ${tab === 'dashboard' ? 'active' : ''}`} onClick={() => setTab('dashboard')}>
+                            <i className="ti ti-layout-dashboard ni"></i> Dashboard
+                        </div>
+                        <div className={`nav-item ${tab === 'daily' ? 'active' : ''}`} onClick={() => setTab('daily')}>
+                            <i className="ti ti-flame ni"></i> Daily Leads <span className="nav-badge">{dailyCount}</span>
+                        </div>
+                        <div className={`nav-item ${tab === 'weekly' ? 'active' : ''}`} onClick={() => setTab('weekly')}>
+                            <i className="ti ti-calendar-stats ni"></i> Weekly Report
+                        </div>
+                    </div>
+                    <div className="sidebar-stat" style={{marginTop: 'auto'}}>
+                        <div className="ss-label">Tuần này</div>
+                        <div className="ss-val">16</div>
+                        <div className="ss-sub">leads · Cập nhật tự động</div>
+                    </div>
+                </div>
+            );
+        }
+
         function App() {
-            const [leads, setLeads] = useState(DATA);
+            const [leads, setLeads] = useState(INITIAL_DATA);
             const [tab, setTab] = useState('daily');
 
+            // Xóa Lead
             const handleDelete = async (id) => {
                 if(confirm("Xóa vĩnh viễn lead này khỏi hệ thống?")) {
                     try {
-                        // Gửi yêu cầu xóa tới server cục bộ
                         const response = await fetch('http://localhost:8080/delete', {
                             method: 'POST',
                             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -255,95 +397,143 @@
                         });
                         
                         if (response.ok) {
-                            const newLeads = leads.filter(l => l.id !== id);
-                            setLeads(newLeads);
                             alert("Đã xóa vĩnh viễn!");
-                            // Reload data sau khi server đã update Dashboard
                             window.location.reload();
                         } else {
-                            // Nếu không có server, chỉ xóa tạm thời ở giao diện
-                            const newLeads = leads.filter(l => l.id !== id);
-                            setLeads(newLeads);
-                            alert("Đã xóa tạm thời (Vui lòng chạy dashboard_server.py để xóa vĩnh viễn)");
+                            setLeads(leads.filter(l => l.id !== id));
+                            alert("Đã xóa tạm thời (Vui lòng chạy Start_Dashboard.bat để xóa vĩnh viễn)");
                         }
                     } catch (e) {
-                        const newLeads = leads.filter(l => l.id !== id);
-                        setLeads(newLeads);
-                        alert("Đã xóa tạm thời (Server chưa bật)");
+                        setLeads(leads.filter(l => l.id !== id));
+                        alert("Đã xóa tạm thời (Server chưa bật. Hãy chạy Start_Dashboard.bat)");
                     }
                 }
             };
 
-            const daily = useMemo(() => {
+            // Lọc Daily (Chỉ 24h)
+            const dailyLeads = useMemo(() => {
                 const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
                 return leads.filter(l => {
                     if(!l.raw_date) return false;
-                    const leadDate = new Date(l.raw_date.replace(" ", "T"));
-                    return leadDate >= twentyFourHoursAgo;
-                });
+                    return new Date(l.raw_date.replace(" ", "T")) >= twentyFourHoursAgo;
+                }).slice(0, 3);
             }, [leads]);
-            const weekly = useMemo(() => leads.slice(0, 8), [leads]);
+
+            // Lọc Weekly (Luôn lấy 8)
+            const weeklyLeads = useMemo(() => leads.slice(0, 8), [leads]);
 
             return (
                 <div className="app">
-                    <div className="sidebar">
-                        <div className="logo"><i className="ti ti-bolt"></i> COINCU LEAD</div>
-                        <div className={`nav-item ${tab === 'daily' ? 'active' : ''}`} onClick={() => setTab('daily')}><i className="ti ti-flame"></i> Daily Leads</div>
-                        <div className={`nav-item ${tab === 'weekly' ? 'active' : ''}`} onClick={() => setTab('weekly')}><i className="ti ti-calendar"></i> Weekly Report</div>
-                    </div>
+                    <Sidebar tab={tab} setTab={setTab} dailyCount={dailyLeads.length} />
+                    
                     <div className="main">
                         <div className="topbar">
-                            <h2 style={{fontSize:'20px',fontWeight:'700'}}>{tab === 'daily' ? '🚀 Leads Nóng 24h' : '📅 Báo Cáo Tuần'}</h2>
-                            <div className="tab-group">
-                                <button className={`tab-btn ${tab === 'daily' ? 'active' : ''}`} onClick={() => setTab('daily')}>Daily View</button>
-                                <button className={`tab-btn ${tab === 'weekly' ? 'active' : ''}`} onClick={() => setTab('weekly')}>Weekly View</button>
+                            <div>
+                                <div className="page-title">{tab === 'daily' ? 'Leads nóng trong 24h' : 'Báo cáo hàng tuần'}</div>
+                                <div className="page-sub">Cập nhật: Hôm nay</div>
                             </div>
+                            <div className="tab-group">
+                                <button className={`tab-btn ${tab === 'weekly' ? 'active' : ''}`} onClick={() => setTab('weekly')}>Weekly</button>
+                                <button className={`tab-btn ${tab === 'daily' ? 'active' : ''}`} onClick={() => setTab('daily')}>Daily</button>
+                            </div>
+                            <button className="export-btn" onClick={() => alert('Chức năng Export!')}>
+                                <i className="ti ti-table-export" style={{fontSize: '15px'}}></i> Export to Sheets
+                            </button>
                         </div>
+                        
                         <div className="content">
+                            {/* Giữ lại hàng Metrics như ban đầu */}
+                            <div className="metrics-row">
+                                <div className="mc c1"><div className="mc-label">Hot Leads 24h</div><div className="mc-val">{dailyLeads.length}</div><div className="mc-delta up"><i className="ti ti-trending-up"></i> Tự động cập nhật</div></div>
+                                <div className="mc c2"><div className="mc-label">Weekly Pipeline</div><div className="mc-val">{weeklyLeads.length}</div><div className="mc-delta up"><i className="ti ti-check"></i> Luôn duy trì 8 leads</div></div>
+                                <div className="mc c3"><div className="mc-label">Đã chốt</div><div className="mc-val">2</div><div className="mc-delta up"><i className="ti ti-check"></i> $1,240 doanh thu</div></div>
+                                <div className="mc c4"><div className="mc-label">Conversion</div><div className="mc-val">18%</div><div className="mc-delta dn"><i className="ti ti-trending-down"></i> -3% vs tuần trước</div></div>
+                            </div>
+
                             {tab === 'daily' ? (
-                                <div className="hot-grid">
-                                    {daily.length === 0 && (
-                                        <div style={{gridColumn: '1 / -1', padding: '40px', textAlign: 'center', color: '#64748b', background: '#fff', borderRadius: '16px', border: '1px dashed #e2e8f0'}}>
-                                            <i className="ti ti-ghost" style={{fontSize: '32px', marginBottom: '10px', display: 'block'}}></i>
-                                            <p style={{fontSize: '14px', fontWeight: '500'}}>Không có lead nào tương tác sâu trong 24h qua.</p>
-                                        </div>
-                                    )}
-                                    {daily.map(l => (
-                                        <div className="hc" key={l.id}>
-                                            <button className="del-action" onClick={() => handleDelete(l.id)} title="Xóa Lead">
-                                                <i className="ti ti-trash"></i>
-                                            </button>
-                                            <span className="hn">{l.name}</span>
-                                            <div className="hcontacts">
-                                                <a href={l.tg} className="lk" target="_blank"><i className="ti ti-brand-telegram"></i> Telegram</a>
-                                                {l.web && <span className="lk"><i className="ti ti-world"></i> {l.web}</span>}
+                                <div id="daily-view">
+                                    <div className="toolbar">
+                                        <i className="ti ti-rocket" style={{fontSize:'17px',color:'#FF6B2C'}}></i>
+                                        <span className="sec-title">Daily Highlight</span>
+                                        <span className="count-pill">{dailyLeads.length} New</span>
+                                    </div>
+                                    <div className="hot-grid">
+                                        {dailyLeads.length === 0 && (
+                                            <div className="empty-state">
+                                                <i className="ti ti-ghost" style={{fontSize: '32px', marginBottom: '10px', display: 'block'}}></i>
+                                                <p style={{fontSize: '14px', fontWeight: '500'}}>Không có lead nào tương tác sâu trong 24h qua.</p>
                                             </div>
-                                            <div className="hnote">{l.note}</div>
-                                            <div className="hres"><strong>Research:</strong> {l.res}</div>
-                                        </div>
-                                    ))}
+                                        )}
+                                        {dailyLeads.map((l) => (
+                                            <div className="hc" key={l.id}>
+                                                <button className="del-daily-btn" onClick={() => handleDelete(l.id)} title="Xóa Lead">
+                                                    <i className="ti ti-trash" style={{fontSize: '14px'}}></i>
+                                                </button>
+                                                <div className="hch">
+                                                    <div><div className="hn">{l.name}</div><div className="hdate"><i className="ti ti-clock"></i> {l.date}</div></div>
+                                                    <span className="hot-badge">HOT LEAD</span>
+                                                </div>
+                                                <div className="hcontacts">
+                                                    <a href={l.tg} className="lk lk-tg" target="_blank"><i className="ti ti-brand-telegram"></i><span>Telegram</span></a>
+                                                    {l.web && <a href={`https://${l.web}`} className="lk lk-wb" target="_blank"><i className="ti ti-world"></i><span>{l.web}</span></a>}
+                                                </div>
+                                                <div className="hnote">{l.note}</div>
+                                                <div className="hres">
+                                                    <strong>Research:</strong> {l.res}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             ) : (
-                                <div className="weekly-table">
-                                    <div className="tr th">
-                                        <div>Lead Name</div><div>Telegram</div><div>Website</div><div>Impact</div><div>Note</div><div>Research</div><div>Action</div>
+                                <div id="weekly-view">
+                                    <div className="toolbar">
+                                        <i className="ti ti-clipboard-list" style={{fontSize:'17px',color:'#FF6B2C'}}></i>
+                                        <span className="sec-title">Weekly Summary</span>
+                                        <span className="count-pill">8 Leads</span>
                                     </div>
-                                    {weekly.map(l => (
-                                        <div className="tr" key={l.id}>
-                                            <div style={{display:'flex',gap:'12px',alignItems:'center'}}>
-                                                <div className={`av ${l.color}`}>{l.initials}</div>
-                                                <div style={{fontWeight:'600',fontSize:'14px',color:'#1e293b'}}>{l.name}</div>
+                                    <div className="weekly-wrap">
+                                        <div className="weekly-table">
+                                            {/* Original Cols Layout */}
+                                            <div className="th cols">
+                                                <div>Name / Ngày</div>
+                                                <div>Contact</div>
+                                                <div>Website / Social</div>
+                                                <div>Impact</div>
+                                                <div>Note (Tóm tắt)</div>
+                                                <div>Research & Cơ hội</div>
+                                                <div></div>
                                             </div>
-                                            <div><a href={l.tg} className="lk" style={{border:'none',background:'transparent',color:'#0088cc',fontWeight:'600'}} target="_blank">Telegram</a></div>
-                                            <div style={{fontSize:'12px',color:'#64748b'}}>{l.web || '-'}</div>
-                                            <div><span className={`ib ${l.impact==='High'?'ih':'im'}`}>{l.impact}</span></div>
-                                            <div style={{fontSize:'12px',lineHeight:'1.5',color:'#334155'}}>{l.note}</div>
-                                            <div style={{fontSize:'12px',color:'#64748b'}}>{l.res}</div>
-                                            <button className="del-action" style={{position:'static'}} onClick={() => handleDelete(l.id)}>
-                                                <i className="ti ti-trash"></i>
-                                            </button>
+                                            {weeklyLeads.map((l) => (
+                                                <div className="tr cols" key={l.id}>
+                                                    <div className="lnc">
+                                                        <div className={`av ${l.color}`}>{l.initials}</div>
+                                                        <div>
+                                                            <div className="ln">{l.name}</div>
+                                                            <div className="lsrc">{l.role}</div>
+                                                            <div className="ldate">{l.date}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="links-cell">
+                                                        <a href={l.tg} className="lk lk-tg" target="_blank"><i className="ti ti-brand-telegram"></i><span>Telegram</span></a>
+                                                    </div>
+                                                    <div className="links-cell">
+                                                        {l.web && <a href={`https://${l.web}`} className="lk lk-wb" target="_blank"><i className="ti ti-world"></i><span>{l.web}</span></a>}
+                                                    </div>
+                                                    <div><span className={`ib ${l.impact === 'High' ? 'ih' : 'im'}`}>{l.impact}</span></div>
+                                                    <div className="note-cell">{l.note}</div>
+                                                    <div className="res-cell">
+                                                        {l.res}
+                                                    </div>
+                                                    <div>
+                                                        <button className="del-weekly-btn" onClick={() => handleDelete(l.id)} title="Xóa Lead">
+                                                            <i className="ti ti-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
+                                    </div>
                                 </div>
                             )}
                         </div>
